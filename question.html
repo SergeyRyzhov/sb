@@ -1,0 +1,67 @@
+<html>
+
+<head>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-debug.js">
+	</script>
+	
+	<script type="text/javascript">
+
+		function init(){
+			'use strict'
+			var state = ko.observable(0);
+			var question = decodeURIComponent((window.location.hash || ' ').substring(1)) || 'У тебя всё хорошо?';
+
+			var position = ko.pureComputed(function(){
+					if(state() == 0)
+					{return {
+						top: 235,
+						left: 360,
+					};}
+					return {
+						top: Math.random() * 235 + 90,
+						left: Math.random() * 500 + 50,
+					};
+			});
+
+			function submit()
+			{
+				alert("Вот умница!")
+			}
+
+			
+			function decline()
+			{
+				alert("Вот ведь шалунишка. Закрой браузер!")
+			}
+
+			function jump(){
+				state(state() + 1);
+			}
+
+			var model = {
+				question:question,
+				position:position,
+
+				submit:submit,
+				decline:decline,
+				jump:jump
+			};
+			ko.applyBindings(model);
+		};
+
+		 document.addEventListener("DOMContentLoaded", init);
+	</script>
+</head>
+
+<body>
+	<h1 style="position:absolute; left:220px; top:175px; width:auto; height:210px;" data-bind="text:question"></h1>
+	<div style="position:absolute; left:285px; top:235px; width:210px; 
+height:210px;">
+		<input type="button" value="Да" data-bind="click: submit">
+	</div>
+	<div style="position: absolute; width: 210px; height: 210px;" data-bind="style:{top: position().top, left:position().left}">
+		<input type="button" value="Нет" data-bind="event: { mouseover:jump }, click: decline">
+	</div>
+</body>
+
+</html>

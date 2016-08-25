@@ -1,0 +1,79 @@
+<html>
+
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function(event) { 
+var p=ko.observable(0);	//р
+var e=ko.observable(0);	//е
+var s=ko.observable(0);	//ш
+var i=ko.observable(0);	//и
+var q=ko.observable(0);	//ё
+var n=ko.observable(0);	//н
+function div(v){
+  return Math.floor(v / 10, 0)
+}
+function mod(v){
+  return v % 10;
+}
+solve = ko.computed(function(){
+p();
+e();
+s();
+i();
+q();
+n();
+
+  var res = 'bad';
+  var ii = i() * i();
+  var nnn = mod(ii);
+  if( Number(n()) === nnn) res = 'good'; else return 'Н';
+
+  var si = s() * i();
+  var si1 = si + div(ii);
+  var qqq = mod(si1);
+  if( Number(q()) === qqq) res = 'good'; else return 'Ш';
+
+  var ei = e() * i();
+  var ei1 = ei + div(si1);
+  var lll = mod(ei1);
+  if( 0 === lll) res = 'good'; else return 'Е';
+  
+  var pi = p() * i();
+  var pi1 = pi + div(ei1);
+  var iii = mod(pi1);
+  if( Number(i()) === iii) res = 'good'; else return 'Р';  
+  
+  /*var pi = p() * i();
+  var pi1 = pi + div(ei1);
+  var lll = mod(pi1);
+  if( Number(i()) === lll) res = 'good'; else return 'bad';*/
+
+  return res;
+});	
+	
+var model = {
+p:p,
+e:e,
+s:s,
+i:i,
+q:q,  
+n:n,  
+solve:solve  
+};
+
+ko.applyBindings(model);
+
+  });
+    </script>
+  <title>РЕШИ*ЕСЛИ=СИЛЁН+XXXX*100+XXXX*1000</title>
+</head>
+
+<body>
+  Р <input data-bind="value: p" type="number" min="1" max="9" pattern /> Е <input data-bind="value: e" type="number" min="1"
+    max="9" /> Ш <input data-bind="value: s" type="number" min="1" max="9" /> И <input data-bind="value: i" type="number" min="2"
+    max="9" /> Ё <input data-bind="value: q" type="number" min="1" max="9" /> Н <input data-bind="value: n" type="number" min="1"
+    max="9" pattern="[14569]" />
+  <span data-bind="text: solve"></span>
+</body>
+
+</html>
